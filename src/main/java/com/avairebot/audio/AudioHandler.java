@@ -48,8 +48,6 @@ import lavalink.client.io.Link;
 import net.dv8tion.jda.core.Permission;
 import net.dv8tion.jda.core.entities.*;
 import net.dv8tion.jda.core.managers.AudioManager;
-import org.apache.http.client.config.CookieSpecs;
-import org.apache.http.client.config.RequestConfig;
 
 import javax.annotation.CheckReturnValue;
 import javax.annotation.Nonnull;
@@ -117,12 +115,7 @@ public class AudioHandler {
     public AudioPlayerManager registerSourceManagers(AudioPlayerManager manager) {
         manager.registerSourceManager(new PlaylistImportSourceManager());
 
-        YoutubeAudioSourceManager youtubeAudioSourceManager = new YoutubeAudioSourceManager();
-        youtubeAudioSourceManager.configureRequests(config -> RequestConfig.copy(config)
-            .setCookieSpec(CookieSpecs.IGNORE_COOKIES)
-            .build());
-
-        manager.registerSourceManager(youtubeAudioSourceManager);
+        manager.registerSourceManager(new YoutubeAudioSourceManager());
         manager.registerSourceManager(new SoundCloudAudioSourceManager());
         manager.registerSourceManager(new TwitchStreamAudioSourceManager());
         manager.registerSourceManager(new BandcampAudioSourceManager());
